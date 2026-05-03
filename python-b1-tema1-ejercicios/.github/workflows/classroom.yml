@@ -1,0 +1,146 @@
+name: Autograding Tests
+'on':
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest    
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'    
+    - name: Display Python version
+      run: python -c "import sys; print(sys.version)"
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: py_1a_ej1a1_test
+      id: py_1a_ej1a1_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_1a_ej1a1_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 1a/ej1a1_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_1a_ej1a2_test
+      id: py_1a_ej1a2_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_1a_ej1a2_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 1a/ej1a2_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_1a_ej1a3_test
+      id: py_1a_ej1a3_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_1a_ej1a3_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 1a/ej1a3_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_1a_ej1a4_test
+      id: py_1a_ej1a4_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_1a_ej1a4_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 1a/ej1a4_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_1b_ej1b1_test
+      id: py_1b_ej1b1_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_1b_ej1b1_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 1b/ej1b1_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_1b_ej1b2_test
+      id: py_1b_ej1b2_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_1b_ej1b2_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 1b/ej1b2_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_1b_ej1b3_test
+      id: py_1b_ej1b3_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_1b_ej1b3_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 1b/ej1b3_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_1b_ej1b4_test
+      id: py_1b_ej1b4_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_1b_ej1b4_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 1b/ej1b4_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_1c_ej1c1_test
+      id: py_1c_ej1c1_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_1c_ej1c1_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 1c/ej1c1_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_1c_ej1c2_test
+      id: py_1c_ej1c2_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_1c_ej1c2_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 1c/ej1c2_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_1c_ej1c3_test
+      id: py_1c_ej1c3_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_1c_ej1c3_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 1c/ej1c3_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_1c_ej1c4_test
+      id: py_1c_ej1c4_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_1c_ej1c4_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 1c/ej1c4_test.py
+        timeout: 10
+        max-score: 1
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        PY_1A_EJ1A1_TEST_RESULTS: "${{steps.py_1a_ej1a1_test.outputs.result}}"
+        PY_1A_EJ1A2_TEST_RESULTS: "${{steps.py_1a_ej1a2_test.outputs.result}}"
+        PY_1A_EJ1A3_TEST_RESULTS: "${{steps.py_1a_ej1a3_test.outputs.result}}"
+        PY_1A_EJ1A4_TEST_RESULTS: "${{steps.py_1a_ej1a4_test.outputs.result}}"
+        PY_1B_EJ1B1_TEST_RESULTS: "${{steps.py_1b_ej1b1_test.outputs.result}}"
+        PY_1B_EJ1B2_TEST_RESULTS: "${{steps.py_1b_ej1b2_test.outputs.result}}"
+        PY_1B_EJ1B3_TEST_RESULTS: "${{steps.py_1b_ej1b3_test.outputs.result}}"
+        PY_1B_EJ1B4_TEST_RESULTS: "${{steps.py_1b_ej1b4_test.outputs.result}}"
+        PY_1C_EJ1C1_TEST_RESULTS: "${{steps.py_1c_ej1c1_test.outputs.result}}"
+        PY_1C_EJ1C2_TEST_RESULTS: "${{steps.py_1c_ej1c2_test.outputs.result}}"
+        PY_1C_EJ1C3_TEST_RESULTS: "${{steps.py_1c_ej1c3_test.outputs.result}}"
+        PY_1C_EJ1C4_TEST_RESULTS: "${{steps.py_1c_ej1c4_test.outputs.result}}"
+      with:
+        runners: py_1a_ej1a1_test,py_1a_ej1a2_test,py_1a_ej1a3_test,py_1a_ej1a4_test,py_1b_ej1b1_test,py_1b_ej1b2_test,py_1b_ej1b3_test,py_1b_ej1b4_test,py_1c_ej1c1_test,py_1c_ej1c2_test,py_1c_ej1c3_test,py_1c_ej1c4_test
