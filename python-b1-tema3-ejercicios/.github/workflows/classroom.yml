@@ -1,0 +1,56 @@
+name: Autograding Tests
+on:
+- push
+- repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest    
+    if: github.actor != 'github-classroom[bot]'
+    steps:
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.13'    
+    - name: Display Python version
+      run: python -c "import sys; print(sys.version)"
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: py_3a_ej3a1_operations_test
+      id: py_3a_ej3a1_operations_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_3a_ej3a1_operations_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 3a/ej3a1/ej3a1_operations_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_3a_ej3a2_main_test
+      id: py_3a_ej3a2_main_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_3a_ej3a2_main_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 3a/ej3a2/ej3a2_main_test.py
+        timeout: 10
+        max-score: 1
+    - name: py_3a_ej3a3_main_test
+      id: py_3a_ej3a3_main_test
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: py_3a_ej3a3_main_test
+        setup-command: sudo -H pip install -r requirements.txt
+        command: pytest 3a/ej3a3/ej3a3_main_test.py
+        timeout: 10
+        max-score: 1
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        PY_3A_EJ3A1_OPERATIONS_TEST_RESULTS: "${{steps.py_3a_ej3a1_operations_test.outputs.result}}"
+        PY_3A_EJ3A2_MAIN_TEST_RESULTS: "${{steps.py_3a_ej3a2_main_test.outputs.result}}"
+        PY_3A_EJ3A3_MAIN_TEST_RESULTS: "${{steps.py_3a_ej3a3_main_test.outputs.result}}"
+      with:
+        runners: py_3a_ej3a1_operations_test,py_3a_ej3a2_main_test,py_3a_ej3a3_main_test
