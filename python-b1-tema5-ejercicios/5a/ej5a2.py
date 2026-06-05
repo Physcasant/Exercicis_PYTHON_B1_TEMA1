@@ -69,27 +69,25 @@ Exemple:
 """
 
 from abc import ABC, abstractmethod
-
-# Corret and overwrite class Animal here 
+# Correct and overwrite class Animal here 
 class Animal(ABC):
-    pass
-
-# Corret and overwrite class Dog(Animal) here
+    @abstractmethod
+    def make_sound(self):
+        pass
+# Correct and overwrite class Dog(Animal) here
 class Dog():
-    pass
-
-
-# Corret and overwrite class class Cat(Animal) here
+    def make_sound(self):
+        return "Woof"
+# Correct and overwrite class class Cat(Animal) here
 class Cat():
-    pass
-
+    def make_sound(self):
+        return "Meow"
 # Corret and overwrite class Duck(Animal) here
 class Duck():
-    pass
-
+    def make_sound(self):
+        return "Quack"
 # Create a list of animals here
-animals = []
+animals = [Dog(), Cat(), Duck()]
 # Print animals sounds
 for animal in animals:
-    # Write your code here
-    pass
+    print(f'{animal.make_sound()}')
